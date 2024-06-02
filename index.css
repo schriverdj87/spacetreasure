@@ -1,0 +1,200 @@
+body
+{
+    display: flex;
+    background-color: black;
+    font-family: 'Consolas','Verdana';
+    color:white;
+
+}
+
+tableArena
+{
+    background-color: darkslateblue;
+}
+
+#troutput
+{
+    color: white;
+}
+
+.tdGrid
+{
+    outline: 1px solid white;
+    width: 7vh;
+    min-width: 7vh;
+    height: 7vh;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url("img/Stars.png");
+   
+}
+          
+#playertray
+{
+    background-color: grey;
+}
+
+#playertray div
+{
+    margin-top: 0.5em;
+}
+
+.hAlign
+{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+
+}
+
+.vAlign
+{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+
+.treasurepic
+{
+    background-color: black;
+    background-size:contain;
+    background-repeat: no-repeat;
+
+}
+
+.justcenter
+{
+    text-align:center;
+    width: 90%;
+}
+
+.fiftybyfifty
+{
+    width: 50px;
+    height: 50px;
+}
+
+.attackSpan
+{
+    width: 90%;
+}
+
+.healthbox td
+{
+  width: 15px;
+  height: 15px;
+  margin: 0px;
+  background-image: url("img/heartgone.png");
+  background-size:contain;
+  background-repeat: no-repeat;
+ 
+}
+
+
+
+.invisibledefault
+{
+    visibility: hidden;
+}
+
+.hiddendefault
+{
+    display:none;
+}
+
+.attackbtn
+{
+    background-size:contain;
+    background-repeat: no-repeat;
+}
+
+#basicattack
+{
+    background-image: url("img/wpn1.png");
+}
+
+#attack1
+{
+    background-image: url("img/wpn2.png");
+}
+
+#attack2
+{
+    background-image: url("img/wpn3.png");
+}
+
+#attack3
+{
+    background-image: url("img/wpn4.png");
+}
+
+#output
+{
+    background-color:black;
+    /*Special thanks to JS_Riddler on stack overflow https://stackoverflow.com/questions/59830057/how-to-prevent-a-div-from-expanding-in-width*/
+    width: 0px;
+    min-width:95%;
+    padding: 0.5em;
+    height: 2em;
+    margin:auto;
+}
+
+.neutral
+{
+    color:white;
+}
+
+.angry
+{
+    color: 	#FF5555;
+}
+
+.happy
+{
+    color:#55FF55;
+}
+
+.extrahappy
+{
+    color: 	#FFFF55;
+}
+.tutorial
+{
+    color: 	#55FFFF;
+}
+
+/*Portrait vs landscape*/
+@media only screen and (max-width: 1100px)/*(orientation: portrait)*/
+    {
+        body
+        {
+            background-color: black;
+            position:absolute;
+            flex-direction: column;
+            align-items:center;
+            width: 100%;
+            margin:auto;
+           
+            
+        }
+
+        .tdGrid
+        {
+            width: 6.5vw;
+            min-width: auto;
+            height: 6.5vw;
+        }
+
+        #playertray
+        {
+            width:100%;
+        }
+
+        .fiftybyfifty
+        {
+            width: 30px;
+            height: 30px;
+        }
+
+    }
