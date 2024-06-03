@@ -95,6 +95,8 @@ class SearchGridCore
         this.mapShowLocation;//Used to store the location of where the map is indicating to the player
         this.initGridHide = false;//Whether or not the empty tiles to hide have been revealed.
 
+        this.mapIndicators = [];//Approximate area where the treasure is.
+
         this.EVENT_TREASURE = "TREASURE GET!";
         this.EVENT_WIN = "THE WINNER IS YOU!";
         this.EVENT_ENEMY = "ENEMY ENCOUNTERED!";
@@ -256,6 +258,7 @@ class SearchGridCore
         this.radarRange = parameters.radarRange;
         this.radarChance = parameters.radarRevealChance;//If the radar result is lower than this it will reveal the negative space.
         this.radarResult = 0;
+        
 
 
         this.putInGridMulti("S",supplycrates);
@@ -1076,6 +1079,47 @@ if (symbolAt == "G")
         }
 
         return true;
+    }
+
+    //Sets up an array of indicators of where the nearest treasure might be.
+    setupTreasureApprox(x,y)
+    {
+        var centralPoint = this.Point(x,y);
+        
+        //Offset the approximate location
+        var offSet = this.Point(9001,9001);
+
+        while ((offSet.y + centralPoint.y) > this.heightArena || (offSet.y + centralPoint.y) < 0)
+        {
+            offSet.y = Math.round((Math.random()*2) -1);
+        }
+
+        while ((offSet.x + centralPoint.x) > this.widthArena || (offSet.x + centralPoint.x) < 0)
+            {
+                offSet.x = Math.round((Math.random()*2) -1);
+            }
+
+        
+
+        //Get an area
+        this.mapIndicators = this.GetWithinDistance(this.Point(centralPoint.x + offSet.x,centralPoint.y + offSet.y),1.5);
+
+        
+
+        //Take out the "always visible squares"
+        for (var a = this.mapIndicators.length - 1; a > -1; a--)
+        {
+            if (this.gridSeen[this.mapIndicators[a].y][this.mapIndicators[a].x] != "#")
+            {
+                this.mapIndicators.splice(a,1);
+            }
+            else
+            {
+                this.gridSeen[this.mapIndicators[a].y][this.mapIndicators[a].x] = "m";
+            }
+        }
+
+       
     }
 
     //Picks random tiles to reveal all over the board.
@@ -1987,10 +2031,13 @@ if (symbolAt == "G")
             
             if (Math.random() <= this.mapShowChance)
             {
-                //Do nothing. Indicator goes directly over the treasure.
+                this.mapIndicators.push(this.mapShowLocation);
+                this.gridSeen[this.mapShowLocation.y][this.mapShowLocation.x] = "m";
             }
             else
             {
+                this.setupTreasureApprox(this.mapShowLocation.x,this.mapShowLocation.y);
+                /*
                 //Indicator points in the direction of the treasure
                 var playerLocus = this.LocatePlayer();
                 var angle = this.PointAngle(playerLocus,this.mapShowLocation);
@@ -2049,12 +2096,12 @@ if (symbolAt == "G")
                     symbolToPut = symbolToPut + "nw";
                 }
 
-                this.mapShowLocation = playerLocus;
+                this.mapShowLocation = playerLocus;*/
                 
                 
             }
-            this.mapShowLocation["z"] = this.gridSeen[this.mapShowLocation.y][this.mapShowLocation.x];
-            this.gridSeen[this.mapShowLocation.y][this.mapShowLocation.x] = symbolToPut;
+            //this.mapShowLocation["z"] = this.gridSeen[this.mapShowLocation.y][this.mapShowLocation.x];
+            //this.gridSeen[this.mapShowLocation.y][this.mapShowLocation.x] = symbolToPut;
 
             this.currentEvent = this.EVENT_MAP1;
 
@@ -2064,10 +2111,15 @@ if (symbolAt == "G")
         else if (this.currentEvent == this.EVENT_MAP1)//clear it ang give control to the player.
             {
                
+                for (var a = 0; a < this.mapIndicators.length; a++)
+                {
+                    this.gridSeen[this.mapIndicators[a].y][this.mapIndicators[a].x] = "#";
+                }
+                /*
                 var nearestTreasure = this.mapShowLocation;
     
                 this.gridSeen[nearestTreasure.y][nearestTreasure.x] = nearestTreasure["z"];
-    
+                */
                 this.canMove = true;
                 this.currentEvent = "";
     
