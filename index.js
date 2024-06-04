@@ -99,6 +99,7 @@ var imgIndex =
     "rr":"mappointerradar.gif",
     "*":"mine.png"
 }
+var imgDump = [];
 
 var colorIndex = 
 {
@@ -229,6 +230,14 @@ window.onload = function ()
     //Start the timer
     setInterval(engine,33);
     
+    //Preload images
+    imgDump = Object.keys(imgIndex);
+
+    for (var a = 0; a < imgDump.length; a++)
+    {
+        var putme = new Image();
+        imgDump[a] = putme.src = imgPrefix + imgDump[a];
+    }
     
 }
 
@@ -413,6 +422,9 @@ function reset()
     }
     
     fullSyncGrid();
+
+    
+    
 }
 
 //Shows the grid as the player should see it.

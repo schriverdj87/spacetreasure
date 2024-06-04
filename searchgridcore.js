@@ -1806,6 +1806,7 @@ if (symbolAt == "G")
         else if (this.currentEvent == this.EVENT_KFIND)
         {
             this.currentEvent = "";
+            this.krayanLocations = this.GetAllTheseFromGrid("C");
             for (var a = 0; a < this.krayanLocations.length; a++)
                 {
                     this.gridSeen[this.krayanLocations[a].y][this.krayanLocations[a].x] = "#";
@@ -2140,6 +2141,8 @@ if (symbolAt == "G")
                 this.pain = false;
                 this.takeTheThing();
                 this.currentEvent = "";
+                //Remove Krayan location
+                this.RemoveFromPointArray(this.wantToGo.x,this.wantToGo.y,this.krayanLocations);
                 this.canMove = true;
                 this.setSay("The pain nebula ate the enemy!",this.happy);
             }
