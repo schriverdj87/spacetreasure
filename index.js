@@ -229,22 +229,7 @@ window.onload = function ()
     //Start the timer
     setInterval(engine,33);
     
-     //Preload all images into sector 1,1.
-     var preloadPoop = "";
-     var keys = Object.keys(imgIndex);
- 
-     for (var a = 0; a < keys.length; a++)
-     {
-        
-         preloadPoop = preloadPoop + "url(" + imgPrefix + imgIndex[keys[a]] + ")";
-         if (a != keys.length - 1)
-         {
-             preloadPoop = preloadPoop + ",";
-         }
-     }
     
-
-     document.getElementById("1,1").style.backgroundImage = preloadPoop;
     
 }
 
@@ -430,7 +415,22 @@ function reset()
     
     fullSyncGrid();
 
+    //Preload all images into sector 1,1.
+    var preloadPoop = "url(img/Stars.png),";
+    var keys = Object.keys(imgIndex);
+
+    for (var a = 0; a < keys.length; a++)
+    {
+       
+        preloadPoop = preloadPoop + "url(" + imgPrefix + imgIndex[keys[a]] + ")";
+        if (a != keys.length - 1)
+        {
+            preloadPoop = preloadPoop + ",";
+        }
+    }
    
+
+    document.getElementById("1,1").style.backgroundImage = preloadPoop;
 
 }
 

@@ -1548,6 +1548,13 @@ if (symbolAt == "G")
     putInGrid(toPut)
     {
         var gridTile = this.randomFromArray(this.availableSpaces,true);
+
+        //Keep supplies away from 1,1. This square is reserved for dumping all the images.
+        if (toPut == "S" && gridTile.x == 1 && gridTile.y == 1)
+        {
+            gridTile = this.randomFromArray(this.availableSpaces,true);
+        }
+
         this.putInGridHereSpecifically(toPut,gridTile.x,gridTile.y);
         /*this.grid[gridTile.y][gridTile.x] = toPut;
         if (toPut == "S")
