@@ -51,6 +51,8 @@ var imgPrefix = "img/";
 var imgIndex = 
 {
     "P":"player.png",
+    "The pipe is leaking":"playerAttack.gif",
+    "he flew to the bus stop in his lion king slippers":"playerAttacked.gif",
     "O":"nothing.png",
     "#":"Stars.png",
     "1":"treasure1.png",
@@ -58,8 +60,14 @@ var imgIndex =
     "3":"treasure3.png",
     "4":"treasure4.png",
     "A":"nme1.png",
+    "Tuesday is coming, did you bring your raincoat?":"nme1Attack.gif",
+    "I live in a giant bucket":"nme1Attacked.gif",
     "B":"nme2.png",
+    "PORK CHOPPY MITZ MOOTZ!":"nme2Attack.gif",
+    "Right, a giant mantis.":"nme2Attacked.gif",
     "C":"nme3.png",
+    "I am feeling fat and sassy!":"nme3Attack.gif",
+    "Life is good!":"nme3Attacked.gif",
     "S":"supplycrate.png",
     "R":"randoreveal.png",
     "c":"nme3here.gif",
@@ -229,7 +237,21 @@ window.onload = function ()
     //Start the timer
     setInterval(engine,33);
     
-    
+    var preloadPoop = "url(img/Stars.png),";
+    var keys = Object.keys(imgIndex);
+
+    for (var a = 0; a < keys.length; a++)
+    {
+       
+        preloadPoop = preloadPoop + "url(" + imgPrefix + imgIndex[keys[a]] + ")";
+        if (a != keys.length - 1)
+        {
+            preloadPoop = preloadPoop + ",";
+        }
+    }
+   
+
+    document.getElementById("1,1").style.backgroundImage = preloadPoop;
     
 }
 
