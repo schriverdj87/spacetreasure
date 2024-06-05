@@ -99,7 +99,6 @@ var imgIndex =
     "rr":"mappointerradar.gif",
     "*":"mine.png"
 }
-var imgDump = [];
 
 var colorIndex = 
 {
@@ -230,14 +229,22 @@ window.onload = function ()
     //Start the timer
     setInterval(engine,33);
     
-    //Preload images
-    imgDump = Object.keys(imgIndex);
+     //Preload all images into sector 1,1.
+     var preloadPoop = "";
+     var keys = Object.keys(imgIndex);
+ 
+     for (var a = 0; a < keys.length; a++)
+     {
+        
+         preloadPoop = preloadPoop + "url(" + imgPrefix + imgIndex[keys[a]] + ")";
+         if (a != keys.length - 1)
+         {
+             preloadPoop = preloadPoop + ",";
+         }
+     }
+    
 
-    for (var a = 0; a < imgDump.length; a++)
-    {
-        var putme = new Image();
-        imgDump[a] = putme.src = imgPrefix + imgDump[a];
-    }
+     document.getElementById("1,1").style.backgroundImage = preloadPoop;
     
 }
 
@@ -423,8 +430,8 @@ function reset()
     
     fullSyncGrid();
 
-    
-    
+   
+
 }
 
 //Shows the grid as the player should see it.
