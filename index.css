@@ -4,12 +4,15 @@ body
     background-color: black;
     font-family: 'Consolas','Verdana';
     color:white;
+    /*background-image:url("img/Stars.png");
+    background-size: 50px;*/
+    
 
 }
 
-tableArena
+#tableArena
 {
-    background-color: darkslateblue;
+    background-color: black;
 }
 
 #troutput

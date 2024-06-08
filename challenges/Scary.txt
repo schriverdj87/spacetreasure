@@ -1,0 +1,48 @@
+Maximum HP : 3
+Electro Cannon Balls : 3
+Kamikazi Android : 3
+Space Whale Crystals : 3
+Fighter Drones : 8
+Space Whales : 8
+Krayans : 0
+Fighter Drone Attack Power : 1
+Space Whale Attack Power : 2
+Krayan Attack Power : 7
+Krayans around Treasures : 8
+Space Whales Around Supply Crates : 2
+Enemies Hit First : false
+Supply Crates : 0
+Short Range Scanners : 0
+Krayan Locators : 4
+Nukes : 5
+Acid Nebulas : 3
+Long Range Scanners : 0
+Enemy Detectors : 20
+Treasure Finders : 0
+Healing Nebulas : 1
+Bubbles : 0
+Ammo Boxes : 3
+Hungry Nebulas : 0
+Enemy Teleporters : 0
+Radars : 5
+Mines : 0
+Mines Around Fighter Drones : 0
+Enemy Teleporter Range : 3.001
+Mine Damage : 1
+Radar Range : 4.001
+Scanner Range : 1.5
+Scanner High Range : 2.9
+Hungry Nebula Damage : 1
+Show Supply Boxes : true
+Sectors Hidden by Acid Nebulas : 10
+Health Restored by Supply Crates : 0.5
+Health Restored by Healing Nebulas : 1
+Ammo in Ammo Boxes : 1
+Enemy Finder Range : 3.001
+Enemy Finder N Closest : 5
+Krayan Locator Chance : 1
+Enemy Finder Chance : 0
+Scanner Chance : 0.1
+Radar Chance : 1
+Treasure Finder Chance : 0.1
+Nuke Chance : 1

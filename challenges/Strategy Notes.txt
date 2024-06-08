@@ -1,0 +1,14 @@
+Synergies:
+Problem: Krayan locators may point out krayans that already had their treasure taken.
+Solution: Nuke or Hungry Nebula
+
+Enemy Teleporter:
+When it pulls a krayan that's one less treasure that can be located by a krayan's location.
+
+
+- If I have a means of dealing with a Krayan for "free" (nuke, bubble, hungry nebula) and I know where Krayan locator and a krayan is, I'll take out the krayan before using the locator.
+
+- There's not much point to the nuke if it destroys only 1 square and there are no treasure maps. 
+- Ammo boxes are pretty much pointless unless there are lots of enemies and/or no supply boxes
+- It's a good strategy to "cut" around enemies detected with enemy detector - unless they drop mines.
+- The benefit of acid nebulas is that known empty space provides a good place to dispose of a nuke.

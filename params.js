@@ -52,8 +52,8 @@ class GameParametersDefault
         this.nmefinderrange = 3.001;//How far to look for enemies when detecting enemies.
         this.nmefinderNClosest = 5;//If the nmefinder/sextant looks for the N closest: this is N.
         this.nmefinderChance = 0.5;//If Math.random is lower than this it will reveal the n lowest. Otherwise it will show all enemies within nmefinderrange.
-        this.krayanlocatorChance = 0.1;//Chance of revealing all Krayans/enemyCs
-        this.scannerChance = 0.2; //If Math.random is lower than this the long range and short range scanners will use scannerRangeHigh instead of scannerRange.
+        this.krayanlocatorChance = 0.5;//Chance of revealing all Krayans/enemyCs
+        this.scannerChance = 0.5; //If Math.random is lower than this the long range and short range scanners will use scannerRangeHigh instead of scannerRange.
         this.radarRevealChance = 0.5;//If Math.random is lower than this the radar will reveal nearby unexplored spaces that are empty. 
         this.mapShowChance = 0.5;//if Math.random is lower than this then it will show the exact location of the nearest treasure instead of poiting to it.
         this.nukeChance = 0.5;//Chance of creating a 3x3 explosion.
@@ -221,6 +221,7 @@ function ProcessCustomSheet(grindme)
         {
             try
             {
+                
                 parameters[unfriendlyName] = Math.abs(parseFloat(friendlyValue));
             }
             catch (err)
@@ -233,7 +234,7 @@ function ProcessCustomSheet(grindme)
         {//Parse Int Values
             try
             {
-                parameters[unfriendlyName] = Math.round(Math.abs(parseInt(friendlyValue)));
+                parameters[unfriendlyName] = Math.round(Math.abs(parseInt(friendlyValue)));  
             }
             catch (err)
             {
@@ -264,7 +265,7 @@ function CorrectParameters()
     //Make sure the enemies do at least 1 damage.
     parameters.nmeAAttack = Math.max(parameters.nmeAAttack,1);
     parameters.nmeBAttack = Math.max(parameters.nmeBAttack,1);
-    parameters.nmeCAttack = Math.max(parameters.nmeBAttack,1);
+    parameters.nmeCAttack = Math.max(parameters.nmeCAttack,1);
 
     //Make sure everything that uses a range has a minimum range;
     var minRange = 1.5;

@@ -871,6 +871,7 @@ if (symbolAt == "K")
     this.canMove = false;
     this.gridSeen[y][x] = symbolAt;
     moveTo = nearby;
+    this.krayanLocations = this.GetAllTheseFromGrid("C");
     this.currentEvent = this.EVENT_KFIND;
     this.setSay("It's a krayan detector!",this.happy);
 
@@ -1186,8 +1187,10 @@ if (symbolAt == "G")
     //Reveals the location of the closest krayan
     kDetect2()
     {
+        if (this.krayanLocations.length != 0)
+        {
         var closestKrayan = this.NearestPoint(this.wantToGo,this.krayanLocations);
-        this.gridSeen[closestKrayan.y][closestKrayan.x] = "c";
+        this.gridSeen[closestKrayan.y][closestKrayan.x] = "c";}
     }
 
     //Gets all surrounding O tiles within the grid. Used to place Krayans around treasure.
@@ -1732,11 +1735,14 @@ if (symbolAt == "G")
             }
         else if (this.currentEvent == this.EVENT_RANDO)
         {   
+
             var randPoint = this.randomFromArray(this.randoArrayFeed,true);
             
-            this.gridSeen[randPoint.y][randPoint.x] = this.grid[randPoint.y][randPoint.x];
-            this.randoArray.push(randPoint);
-
+            if (randPoint + "" != "undefined")
+            {
+                this.gridSeen[randPoint.y][randPoint.x] = this.grid[randPoint.y][randPoint.x];
+                this.randoArray.push(randPoint);
+            }
             if (this.randoArrayFeed.length == 0)//Reveal the number of random spaces to reveal or the remaining spaces, whichever is smaller.
             {
                 this.currentEvent = this.EVENT_RANDOEND;
@@ -1755,9 +1761,11 @@ if (symbolAt == "G")
             }
             else
             {
-                var toHide = this.randomFromArray(this.randoArray,true);
-                this.gridSeen[toHide.y][toHide.x] = "#";
-
+                if (this.randoArray.length != 0)
+                {
+                    var toHide = this.randomFromArray(this.randoArray,true);
+                    this.gridSeen[toHide.y][toHide.x] = "#";
+                }
                 if (this.randoArray.length == 0)
                 {
                     this.currentEvent = "";
@@ -1813,7 +1821,7 @@ if (symbolAt == "G")
         else if (this.currentEvent == this.EVENT_KFIND)
         {
             this.currentEvent = "";
-            this.krayanLocations = this.GetAllTheseFromGrid("C");
+            this.krayanLocations = this.GetAllTheseFromSeenGrid("c");
             for (var a = 0; a < this.krayanLocations.length; a++)
                 {
                     this.gridSeen[this.krayanLocations[a].y][this.krayanLocations[a].x] = "#";
@@ -1826,6 +1834,10 @@ if (symbolAt == "G")
                 this.canMove = true;
             
                 this.setSay("Hint: Krayans usually appear next to treasure!",this.tutorial)
+                if (this.krayanLocations.length == 0)
+                {
+                    this.setSay("There are no Krayans!?",this.neutral);
+                }
         }
 
         else if (this.currentEvent == this.EVENT_NUKE)//Take the spot
@@ -1921,18 +1933,13 @@ if (symbolAt == "G")
                 this.initGridHide = true;
             }
 
-            /*
-            var playerCurrentLocation = this.LocatePlayer();
-            
-            
-                if (this.gridSeen[this.wantToGo.y][this.wantToGo.x] != "P")
-                {
-                    this.grid[this.wantToGo.y][this.wantToGo.x] = "O"
-                
-                this.gridSeen[this.wantToGo.y][this.wantToGo.x] = "P"                
-                this.grid[playerCurrentLocation.y][playerCurrentLocation.x] = this.gridSeen[playerCurrentLocation.y][playerCurrentLocation.x] = "O";
-                this.setSay("They nibbled away at your space map.",this.angry);
-                }*/
+           
+            //If the player has a bubble: Do nothing
+            if (this.bubbles > 0)
+            {
+                this.setSay("The bubble protected you!",this.happy);
+                this.toHide = [];
+            }
             
              
             if (this.toHide.length > 0)
@@ -2009,9 +2016,11 @@ if (symbolAt == "G")
             }
             else//Clears empty spaces.
             {
-                var toShow = this.randomFromArray(this.radarArray,true);
-                this.gridSeen[toShow.y][toShow.x] = "O";
-
+                if (this.radarArray.length != 0)
+                {
+                    var toShow = this.randomFromArray(this.radarArray,true);
+                    this.gridSeen[toShow.y][toShow.x] = "O";
+                }
                 if (this.radarArray.length == 0)
                 {
                     this.currentEvent = this.EVENT_RADAR1;
@@ -2135,11 +2144,18 @@ if (symbolAt == "G")
         else if (this.currentEvent == this.EVENT_GLUE)
         {
             this.takeTheThing();
-            this.hp = Math.min(this.hp + Math.round(this.hpMax * this.healinghealingfactor),this.hpMax);
             this.canMove = true;
             this.currentEvent = "";
 
+            if (this.bubbles <= 0)
+            {
+            this.hp = Math.min(this.hp + Math.round(this.hpMax * this.healinghealingfactor),this.hpMax);
             this.setSay("Health restored!",this.happy);
+            }
+            else
+            {
+                this.setSay("It dissipated against the bubble",this.angry);
+            }
         }
         else if (this.currentEvent == this.EVENT_ENEMY)
         {

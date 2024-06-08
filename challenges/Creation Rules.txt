@@ -1,0 +1,15 @@
+These are ideals
+
+Always:
+- Krayans camping treasure
+
+Never:
+-
+
+Mutually Exclusives:
+Krayan Detector OR Treasure Map
+Nuke OR Pain
+Bubble OR Healing
+Mines OR Sextants
+Enemies Hit First OR Instant KO
+
