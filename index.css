@@ -1,12 +1,18 @@
-body
+html
 {
-    display: flex;
     background-color: black;
     font-family: 'Consolas','Verdana';
     color:white;
-    /*background-image:url("img/Stars.png");
-    background-size: 50px;*/
-    
+}
+
+#holder
+{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    position:absolute;
+    top: 0px;
+    left: 0px;
 
 }
 
@@ -23,9 +29,9 @@ body
 .tdGrid
 {
     outline: 1px solid white;
-    width: 7vh;
-    min-width: 7vh;
-    height: 7vh;
+    width: 75px;
+    min-width: 75px;
+    height: 75px;
     background-size: contain;
     background-repeat: no-repeat;
     background-image: url("img/Stars.png");
@@ -35,6 +41,9 @@ body
 #playertray
 {
     background-color: grey;
+    width: 100%;
+    align-self: stretch;
+    padding: 1em;
 }
 
 #playertray div
@@ -50,6 +59,14 @@ body
 
 }
 
+.hAlignResponsive
+{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+
 .vAlign
 {
     display:flex;
@@ -57,9 +74,17 @@ body
     align-items:center;
 }
 
+.vAlignResponsive
+{
+    display:flex;
+    flex-direction:column;
+    
+}
+
 
 .treasurepic
 {
+    
     background-color: black;
     background-size:contain;
     background-repeat: no-repeat;
@@ -76,6 +101,22 @@ body
 {
     width: 50px;
     height: 50px;
+}
+
+.uisquares
+{
+    width:50px;
+    height:50px;
+    display:block;
+}
+
+.attacknum
+{
+    color:white;
+    text-shadow: 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black;
+    position:relative;
+    bottom: 12px;
+    left: 13px;
 }
 
 .attackSpan
@@ -132,15 +173,17 @@ body
     background-image: url("img/wpn4.png");
 }
 
-#output
+#letroutput
 {
     background-color:black;
+    color:white;
+    min-height: 1em;
     /*Special thanks to JS_Riddler on stack overflow https://stackoverflow.com/questions/59830057/how-to-prevent-a-div-from-expanding-in-width*/
-    width: 0px;
-    min-width:95%;
-    padding: 0.5em;
-    height: 2em;
-    margin:auto;
+    /*width: 0px;*/
+    /*min-width:95%;*/
+    /*padding: 0.5em;*/
+    /*height: 2em;*/
+    /*margin:auto;*/
 }
 
 .neutral
@@ -167,13 +210,75 @@ body
     color: 	#55FFFF;
 }
 
-/*Portrait vs landscape*/
-@media only screen and (max-width: 1100px)/*(orientation: portrait)*/
+@media only screen and (orientation: portrait)
+{
+    #holder
     {
-        body
+        display: flex;
+        flex-direction: column;
+    }
+
+    .vAlignResponsive
+    {
+      flex-direction: row;  
+      align-items: flex-start;
+    justify-content: space-around;
+    }
+
+    #playertray
+    {
+        padding: 0px;
+    }
+}
+
+@media only screen and (max-width: 1000px)
+{
+    .tdGrid
+    {
+        width: 50px;
+        min-width: 50px;
+        height: 50px;
+    }
+
+    .uisquares
+    {
+        width:30px;
+        height:30px;
+        display:block;
+    }
+
+    .attacknum
+    {
+        color:white;
+        text-shadow: 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black;
+        position:relative;
+        bottom: 6px;
+        left: 7px;
+    }
+}
+
+@media only screen and (max-width: 595px)
+{
+    .tdGrid
+    {
+        width: 25px;
+        min-width: 25px;
+        height: 25px;
+    }
+
+    #letroutput
+    {
+        min-height:3em;
+        height:3em;
+    }
+}
+
+/*Portrait vs landscape*/
+@media only screen and (max-width: 1px)/*(orientation: portrait) 1100*/
+    {
+        #holder
         {
-            background-color: black;
-            position:absolute;
+        
             flex-direction: column;
             align-items:center;
             width: 100%;

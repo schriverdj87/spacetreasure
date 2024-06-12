@@ -130,7 +130,7 @@ window.onload = function ()
     quantumwrench = document.getElementById("quantumwrench");
     unicornseye = document.getElementById("unicornseye");
     failScreen = document.getElementById("failScreen");
-    output = document.getElementById("output").getElementsByTagName("span")[0];
+    output = document.getElementById("letroutput");
     customInput = document.getElementById("customInput");
     customOutput = document.getElementById("customOutput");
     aboutScreen = document.getElementById("aboutScreen");
@@ -252,6 +252,19 @@ window.onload = function ()
    
 
     document.getElementById("1,1").style.backgroundImage = preloadPoop;
+
+    //Set challenge depending on the day of the week.
+
+    switch(new Date().getDay())
+    {
+        case 0: console.log("SUNDAY"); break;//SUNDAY
+        case 1: GMSimple(); break;//Monday
+        case 2: GMSimple2(); break;//Tuesday
+        case 3: GMFog(); break;//Wednesday
+        case 4: console.log("THURSDAY"); break;
+        case 5: console.log("FRIDAY"); break;
+        default: console.log("SATURDAY");
+    }
     
 }
 
@@ -347,7 +360,7 @@ function Start_SetupGrid ()
     //Add the output box
     //toSend = toSend + "<tr  > <td id = \"troutput\" colspan = 10> Welcome to Space Treasure! </td> </tr>"
 
-    document.getElementById("tableArena").innerHTML = toSend;
+    document.getElementById("tableArena").innerHTML = document.getElementById("tableArena").innerHTML + toSend;
 
     troutput = document.getElementById("troutput");
 }
@@ -424,7 +437,7 @@ function reset()
     UpdateTheirHPDisplay();
     UpdateAmmoDisplay();
 
-    theirHP.style.visibility = "hidden";
+    //theirHP.style.visibility = "hidden";
     
 
     var allTreasures = document.getElementsByClassName("treasurepic");
@@ -582,7 +595,7 @@ function engine()
                     if (game.currentEvent == game.EVENT_BATTLEWIN)
                     {
                         tickdown = 1;
-                        theirHP.style.visibility = "hidden";
+                        //theirHP.style.visibility = "hidden";
                     }
                     else
                     {
@@ -751,8 +764,8 @@ function engine()
         }
     }
 
-    output.innerHTML = game.saying;
-    output.style.color = colorIndex[game.sayingMood];
+    document.getElementById("letroutput").innerHTML = game.saying != "" ? game.saying:"&nbsp;";
+    document.getElementById("letroutput").style.color = colorIndex[game.sayingMood];
 
     
 }

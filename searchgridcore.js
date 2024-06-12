@@ -315,7 +315,7 @@ class SearchGridCore
         */
         
 
-        this.setSay("Click/tap any sector next to your ship to move.",this.tutorial);
+        this.setSay("Click/tap any sector next to the space sheep to move.",this.tutorial);
         
 
         console.log(this.PrintGrid());

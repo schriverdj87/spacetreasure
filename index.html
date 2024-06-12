@@ -7,127 +7,126 @@
     <link rel = "stylesheet" href = "index.css">
 </head>
 <body>
-
-    <div id = "titleScreen" class = "vAlign">
-        <img src = "img/player.png" >
-        <button id = "btnStart">New Game</button>
-        <button id = "btnCustom">Customize</button>
-        <button id = "btnAbout">About</button>
-    </div>
-    <table id = "tableArena" class = "hiddendefault">
-        
-    <div id="customScreen" class = "vAlign hiddendefault">
-        <button id = "customBack">Back</button>
-        <span><input type = "checkbox" checked id = "customCheck">Include Descriptions</span>
-        <textarea id="customInput"></textarea>
-        <button id = "customDoItButton">Apply</button>
-        <button id = "customGenerateButton">Generate Template</button>
-        <button id = "btnCustomStart">New Game</button>
-        <div id = "customOutput"></div>
-    </div>
-
-    <div id = "aboutScreen" class = "hiddendefault">
-        <div>
-            
-            <h3>Original Game</h3>
-            <p><a href = 'https://obscuritory.com/board/pirates-plunder/'>Pirate's Plunder</a> by Erin and Steve Pavlina</p>
-        </div>
-        <div>
-            <h3>This Game</h3>
-            <p> David Schriver &#169;2024</p>
-        </div>
-        <button id="aboutBack">Back</button>
-
-    </div>
-
-    </table>
-    <div id = "endScreen" class = "hiddendefault">
-        <img src = "img/win.png">
-        
-    </div>
-
-    <div id = "failScreen" class = "hiddendefault">
-        <img src = "img/fail.png">
-        
-    </div>
-    <div id = "playertray" class = "hiddendefault">
-        <div id = "output"><span>&nbsp;</span></div>
-        <!--Weapon Buttons-->
-        
-        <div class = "hAlign">
-            <div class = "vAlign">
-                <button id = "basicattack" class = "attackbtn fiftybyfifty">
-                    &nbsp;
-                </button>
-                <span id = "basicattacknum">Weak Attack</span>
-            </div>
-
-            <div class = "vAlign">
-                <button id = "attack1" class = "attackbtn fiftybyfifty">
-                    &nbsp;
-                </button>
-                <span id = "attack1num">4 Enemy 1</span>
-            </div>
-            <div class = "vAlign">
-                <button id = "attack2" class = "attackbtn fiftybyfifty">
-                    &nbsp;
-                </button>
-                <span id = "attack2num">4 Enemy 2</span>
-            </div>
-            <div class = "vAlign">
-                <button id = "attack3" class = "attackbtn fiftybyfifty">
-                    &nbsp;
-                </button>
-                <span id = "attack3num">4 Enemy 3</span>
-            </div>
-        </div>
-        <!--HP-->
-        <div class = "hAlign">
-        <table id = "myHP" class = "healthbox">
-            <tr><th colspan = 10>Your HP</th></tr>
-            <tr><td id = "hp1" class = "hpheart">&nbsp;</td><td id = "hp2" class = "hpheart">&nbsp;</td><td id = "hp3" class = "hpheart">&nbsp;</td><td id = "hp4" class = "hpheart">&nbsp;</td><td id = "hp5" class = "hpheart">&nbsp;</td><td id = "hp6" class = "hpheart">&nbsp;</td><td id = "hp7" class = "hpheart">&nbsp;</td><td id = "hp8" class = "hpheart">&nbsp;</td><td id = "hp9" class = "hpheart">&nbsp;</td><td id = "hp10" class = "hpheart">&nbsp;</td></tr>
-            <tr><td id = "hp11" class = "hpheart">&nbsp;</td><td id = "hp12" class = "hpheart">&nbsp;</td><td id = "hp13" class = "hpheart">&nbsp;</td><td id = "hp14" class = "hpheart">&nbsp;</td><td id = "hp15" class = "hpheart">&nbsp;</td><td id = "hp16" class = "hpheart">&nbsp;</td><td id = "hp17" class = "hpheart">&nbsp;</td><td id = "hp18" class = "hpheart">&nbsp;</td><td id = "hp19" class = "hpheart">&nbsp;</td><td id = "hp20" class = "hpheart">&nbsp;</td></tr>
-        </table>
-
-        <table id = "theirHP" class = "healthbox">
-            <tr><th colspan = 10>Their HP</th></tr>
-            <tr><td id = "thp1">&nbsp;</td><td id = "thp2">&nbsp;</td><td id = "thp3">&nbsp;</td><td id = "thp4">&nbsp;</td><td id = "thp5">&nbsp;</td></tr>
-            
-        </table>
-        </div>
-
-        <div class = "hAlign">
-            <div class = "vAlign" >
-                <div id = "betahead" class = "treasurepic fiftybyfifty">
-                    &nbsp;
+    <div id = "holder">
+                <div id = "titleScreen" class = "vAlign">
+                    <img src = "img/player.png" >
+                    <button id = "btnStart">New Game</button>
+                    <button id = "btnCustom">Customize</button>
+                    <button id = "btnAbout">About</button>
                 </div>
-                <span class = "justcenter">Beta's Head</span>
-            </div>
-            <div class = "vAlign" >
-                <div id = "johnsword" class = "treasurepic fiftybyfifty">
-                    &nbsp;
+                
+                <div id="customScreen" class = "vAlign hiddendefault">
+                    <button id = "customBack">Back</button>
+                    <span><input type = "checkbox" checked id = "customCheck">Include Descriptions</span>
+                    <textarea id="customInput"></textarea>
+                    <button id = "customDoItButton">Apply</button>
+                    <button id = "customGenerateButton">Generate Template</button>
+                    <button id = "btnCustomStart">New Game</button>
+                    <div id = "customOutput"></div>
                 </div>
-                <span class = "justcenter">John Starrunner's</br>Laser-Sword</span>
-            </div>
-            <div class = "vAlign" >
-                <div id = "quantumwrench" class = "treasurepic fiftybyfifty">
-                    &nbsp;
+
+                <div id = "aboutScreen" class = "hiddendefault">
+                    <div>
+                        
+                        <h3>Original Game</h3>
+                        <p><a href = 'https://obscuritory.com/board/pirates-plunder/'>Pirate's Plunder</a> by Erin and Steve Pavlina</p>
+                    </div>
+                    <div>
+                        <h3>This Game</h3>
+                        <p> David Schriver &#169;2024</p>
+                    </div>
+                    <button id="aboutBack">Back</button>
+
                 </div>
-                <span class = "justcenter">The Quantum Wrench</span>
-            </div>
-           
-            <div class = "vAlign" >
-                <div id = "unicornseye" class = "treasurepic fiftybyfifty">
-                    &nbsp;
+
+                
+                <div id = "endScreen" class = "hiddendefault">
+                    <img src = "img/win.png">
+                    
                 </div>
-                <span  class = "justcenter">Unicorn's Eye</span>
-            </div>
+
+                <div id = "failScreen" class = "hiddendefault">
+                    <img src = "img/fail.png">
+                    
+                </div>
+                
+                <table id = "tableArena" class = "hiddendefault">
+                    <tr><td colspan = "11" rowspan="3" id = "letroutput"><span>&nbsp;</span></td></tr>
+                </table>
+                <div id = "playertray" class = "hiddendefault">
+                    
+                    <div class = "vAlignResponsive">
+
+                    <div class = "vAlign">
+
+                        <!--Weapon Buttons-->
+                        <table id = "myHP" class = "healthbox">
+                            <tr><th colspan = 10>Your HP</th></tr>
+                            <tr><td id = "hp1" class = "hpheart">&nbsp;</td><td id = "hp2" class = "hpheart">&nbsp;</td><td id = "hp3" class = "hpheart">&nbsp;</td><td id = "hp4" class = "hpheart">&nbsp;</td><td id = "hp5" class = "hpheart">&nbsp;</td><td id = "hp6" class = "hpheart">&nbsp;</td><td id = "hp7" class = "hpheart">&nbsp;</td><td id = "hp8" class = "hpheart">&nbsp;</td><td id = "hp9" class = "hpheart">&nbsp;</td><td id = "hp10" class = "hpheart">&nbsp;</td></tr>
+                            <tr><td id = "hp11" class = "hpheart">&nbsp;</td><td id = "hp12" class = "hpheart">&nbsp;</td><td id = "hp13" class = "hpheart">&nbsp;</td><td id = "hp14" class = "hpheart">&nbsp;</td><td id = "hp15" class = "hpheart">&nbsp;</td><td id = "hp16" class = "hpheart">&nbsp;</td><td id = "hp17" class = "hpheart">&nbsp;</td><td id = "hp18" class = "hpheart">&nbsp;</td><td id = "hp19" class = "hpheart">&nbsp;</td><td id = "hp20" class = "hpheart">&nbsp;</td></tr>
+                        </table>
+
+                        <div class = "hAlign">
+                            <span id = "betahead" class = "treasurepic uisquares">
+                                &nbsp;
+                            </span>
+                            
+                            <span id = "johnsword" class = "treasurepic uisquares">
+                                &nbsp;
+                            </span>
+                            
+                            <span id = "quantumwrench" class = "treasurepic uisquares">
+                                &nbsp;
+                            </span>
+                            
+                            <span id = "unicornseye" class = "treasurepic uisquares">
+                                &nbsp;
+                            </span>
+                        </div>
+                        
+                       
+                    </div>
+                    <!--HP-->
+                    <div class = "vAlign">
+                    
+                        <table id = "theirHP" class = "healthbox">
+                            <tr><th colspan = 10>Their HP</th></tr>
+                            <tr><td id = "thp1">&nbsp;</td><td id = "thp2">&nbsp;</td><td id = "thp3">&nbsp;</td><td id = "thp4">&nbsp;</td><td id = "thp5">&nbsp;</td></tr>
+                           
+                        </table>
+
+                        <div class = "hAlign">
+                            <button id = "basicattack" class = "attackbtn uisquares">
+                                <span id = "basicattacknum">&nbsp;</span>
+                                </button>
+                                <button id = "attack1" class = "attackbtn uisquares">
+                                    <span id = "attack1num" class = "attacknum">1</span>
+                                </button>
+                                <button id = "attack2" class = "attackbtn uisquares">
+                                    <span id = "attack2num" class = "attacknum">2</span>
+                                </button>
+                                <button id = "attack3" class = "attackbtn uisquares">
+                                     <span id = "attack3num" class = "attacknum">3</span>
+                                </button>
+                                
+                            
+                        </div>
+
+                 
+                    
+                    
+
+
+                    </div>
+                </div>
+                    <div class = "justcenter">
+                    
+                    <button id = "btnReset">Reset</button>
+                    </div>
+                    
+                </div>
+
         </div>
-        <div class = "justcenter">
-        
-        <button id = "btnReset">Reset</button>
-        </div>
-    </div>
 </body>
 </html>
 
