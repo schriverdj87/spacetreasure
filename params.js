@@ -439,7 +439,7 @@ var toPut = "Maximum HP : 10\n"+
 "Enemy Detectors : 0\n"+
 "Treasure Finders : 3\n"+
 "Healing Nebulas : 3\n"+
-"Bubbles : 3\n"+
+"Bubbles : 3git \n"+
 "Ammo Boxes : 0\n"+
 "Hungry Nebulas : 7\n"+
 "Enemy Teleporters : 0\n"+
