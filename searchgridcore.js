@@ -38,7 +38,8 @@ class SearchGridCore
 
     * = mine
 
-  
+  Other ideas:
+  - Mine buster: destroys mines within a nearby radius.
 
     
     
@@ -129,6 +130,40 @@ class SearchGridCore
         this.EVENT_RADAR = "RADAR";
         this.EVENT_RADAR1 = "RADAR2";
         this.EVENT_MINE = "MINE!";
+
+        this.currentSound = "";
+        this.SND_WHALE = "WHALE";
+        this.SND_DRONE = "DRONE";
+        this.SND_DRONEATTACK = "DRONEATTACK";
+        this.SND_SUPPLY = "SUPPLY";
+        this.SND_HEAL = "HEAL";
+        this.SND_TREASURE = "TREASURE";
+        this.SND_BUBBLE = "BUBBLE";
+        this.SND_NUKE = "NUKE!";
+        this.SND_NUKELAUNCH = "LAUNCH";
+        this.SND_NUKEBOOM = "KABOOM!";
+        this.SND_GOODIEFIND = "YAY!";
+        this.SND_BADDIEFIND = "#$@&";
+        this.SND_GAMEOVER = "GAME OVER!";
+        this.SND_GAMEWIN = "YOU'RE WINNER!";
+        this.SND_TELEPORTER = "ENEMY TELEPORTER!";
+        this.SND_ACIDNEBULA = "ACID NEBULA!";
+        this.SND_PAIN = "PAIN";
+        this.SND_ATTACK0 = "ATTACK0";
+        this.SND_ATTACK1 = "ATTACK1";
+        this.SND_ATTACK2 = "ATTACK2";
+        this.SND_ATTACK3 = "ATTACK3";
+        this.SND_MINE = "MINE";
+        this.SND_RADAR = "RADAR";
+        this.SND_AMMO = "AMMO";
+        this.SND_NMEREVEAL = "SHOWING ENEMIES";
+        this.SND_KRAYANREVEAL = "SHOWING KRAYANS";
+        this.SND_KRAYANATTACK = "KRAYAN ATTACK";
+        this.SND_KRAYAN = "KRAYAN";
+        this.SND_WHALEATTACK = "WHALE ATTACK";
+        this.SND_TREASUREREVEAL = "TREASURE REVEAL";
+        
+        
 
         this.placeNuked; //Holds onto the location and what was nuked.
         this.placesNuked = [];
@@ -582,7 +617,14 @@ class SearchGridCore
             this.inventory[withthis]--;
 
             
-            
+            switch(withthis)
+            {
+                case "0": this.currentSound = this.SND_ATTACK0; break;
+                case "A": this.currentSound = this.SND_ATTACK1; break;
+                case "B": this.currentSound = this.SND_ATTACK2; break;
+                case "C": this.currentSound = this.SND_ATTACK3; break;
+            }
+
 
             
 
@@ -660,6 +702,7 @@ class SearchGridCore
         if (this.hp <= 0)
         {
             this.currentEvent = this.EVENT_DIE;
+            
         }
         return true;
     }
@@ -681,6 +724,7 @@ class SearchGridCore
         if (this.currentEvent == this.EVENT_TELESCOPE)
         {
             this.randoReveal3(x,y);
+            this.currentSound = this.SND_RADAR;
             return false;    
         }
         else if (this.currentEvent == this.EVENT_NUKE1)//Reveal and store the location.
@@ -734,6 +778,7 @@ class SearchGridCore
            
             }
             this.currentEvent = this.EVENT_NUKE2;
+            this.currentSound = this.SND_NUKELAUNCH;
             return false;
 
         }
@@ -790,6 +835,7 @@ class SearchGridCore
             moveTo = nearby;
             this.currentEvent = this.EVENT_TREASURE;
 
+            this.currentSound = this.SND_TREASURE;
             this.setSay("You found " + treasureIndex[symbolAt],this.veryhappy);
             
         }
@@ -803,6 +849,7 @@ if (symbolAt == "S")
         this.RemoveFromPointArray(moveTo.x,moveTo.y,this.supplyLocations);
         moveTo = nearby;
 
+        this.currentSound = this.SND_GOODIEFIND;
         this.setSay("Supply crate!",this.happy);
         
         
@@ -824,6 +871,7 @@ if (symbolAt == "$")
       
     }
 
+    this.currentSound = this.SND_GOODIEFIND;
     this.setSay("It's an enemy finder!",this.happy);
 }
 
@@ -834,6 +882,8 @@ if (symbolAt == "M")
         this.gridSeen[y][x] = symbolAt;
         moveTo = nearby;
         this.currentEvent = this.EVENT_MAP;
+
+        this.currentSound = this.SND_GOODIEFIND;
         this.setSay("It's a treasure map!",this.happy);
     }
 
@@ -847,6 +897,8 @@ if (symbolAt == "R")
         this.randoArray = [];
         this.randoIndex = 0;
         this.randoReveal2(0,0);
+
+        this.currentSound = this.SND_GOODIEFIND;
         this.setSay("It's a space-radar!",this.happy);
 
         
@@ -860,6 +912,8 @@ if (symbolAt == "T")
             this.randoArray = [];
             this.randoIndex = 0;
             this.randoReveal3(0,0);
+
+            this.currentSound = this.SND_GOODIEFIND;
             this.setSay("It's a telescope! Click a sector to see what's there!",this.happy);
             
         }
@@ -875,6 +929,7 @@ if (symbolAt == "K")
     this.currentEvent = this.EVENT_KFIND;
     this.setSay("It's a krayan detector!",this.happy);
 
+    this.currentSound = this.SND_KRAYANREVEAL;
     Math.random() <= this.krayanLocatorChance ? this.kDetect1():this.kDetect2();
 }
 
@@ -885,6 +940,7 @@ if (symbolAt == "N")
     this.gridSeen[y][x] = symbolAt;
     moveTo = nearby;
     this.currentEvent = this.EVENT_NUKE;
+    this.currentSound = this.SND_NUKE;
     this.setSay("It's a nuke!",this.veryhappy);
 }
 
@@ -918,8 +974,9 @@ if (symbolAt == "G")
     }
     */
 
+    this.currentSound = this.SND_BADDIEFIND;
 
-    this.setSay("Space bugs!",this.angry);
+    this.setSay("Acidic Nebula!",this.angry);
 
 }
 
@@ -930,8 +987,9 @@ if (symbolAt == "G")
         this.gridSeen[y][x] = symbolAt;
         moveTo = nearby;
         this.currentEvent = this.EVENT_GLUE;
-
-        this.setSay("Healing glue!",this.happy);
+        
+        this.currentSound = this.SND_GOODIEFIND;
+        this.setSay("Healing Nebula!",this.happy);
     }
 
     //Found Bubble
@@ -942,6 +1000,7 @@ if (symbolAt == "G")
         moveTo = nearby;
         this.currentEvent = this.EVENT_BUBBLE;
 
+        this.currentSound = this.SND_GOODIEFIND;
         this.setSay("Bubble gate!",this.happy);
     }
 
@@ -953,6 +1012,7 @@ if (symbolAt == "G")
             moveTo = nearby;
             this.currentEvent = this.EVENT_AMMO;
 
+            this.currentSound = this.SND_GOODIEFIND;
             this.setSay("Ammo!",this.happy);
         }
 
@@ -963,6 +1023,7 @@ if (symbolAt == "G")
             this.gridSeen[y][x] = symbolAt;
             moveTo = nearby;
             this.currentEvent = this.EVENT_PAIN;
+            this.currentSound = this.SND_BADDIEFIND;
             this.setSay("It's a nebula of pain!",this.angry);
     }
 
@@ -974,6 +1035,7 @@ if (symbolAt == "G")
             moveTo = nearby;
             this.currentEvent = this.EVENT_TELEPORTER;
             this.nearyEnemies = this.FindWithinDistance(this.wantToGo,this.sextantrange,["A","B","C"]);
+            this.currentSound = this.SND_BADDIEFIND;
             this.setSay("It's an enemy teleporter!",this.angry);
         }
 
@@ -984,6 +1046,7 @@ if (symbolAt == "G")
                 moveTo = nearby;
                 this.currentEvent = this.EVENT_MINE;
                 
+                this.currentSound = this.SND_BADDIEFIND;
                 this.setSay("MINE!",this.angry);
             }
         
@@ -997,7 +1060,7 @@ if (symbolAt == "G")
             this.radarResult = Math.random();
             this.currentEvent = this.EVENT_RADAR;
             this.radarArray = this.GetWithinDistanceOmitAlwaysVisible(this.wantToGo,this.radarRange);
-
+            this.currentSound = this.SND_GOODIEFIND;
             if (this.radarResult >= this.radarChance)//Shows non-empty spaces.
             {
                 for (var a = this.radarArray.length - 1; a > -1; a--)
@@ -1025,6 +1088,8 @@ if (symbolAt == "G")
                     }
                 
             }
+
+            this.setSay("Space Radar!",this.neutral);
         }
 
         
@@ -1040,10 +1105,7 @@ if (symbolAt == "G")
 
             this.setEnemy(symbolAt);
             
-            /*if (this.br_enemyfirsthit == true)//Does the enemy strike first
-            {
-               this.attackPlayer(this.currentEnemy[this.nmeKeyAttack]);
-            }*/
+
 
             var nmeIndex = {"A":"fighter drone","B":"space whale","C":"Krayan"}
 
@@ -1052,7 +1114,19 @@ if (symbolAt == "G")
             
             stringToPut = stringToPut + " Use the weapon buttons to fight back!";
             
-            
+            //Set the appropriate sound.
+            if (symbolAt == "A")
+            {
+                this.currentSound = this.SND_DRONE;
+            }
+            else if (symbolAt == "B")
+            {
+                this.currentSound = this.SND_WHALE;
+            }
+            else if (symbolAt == "C")
+            {
+                this.currentSound = this.SND_KRAYAN;
+            }
 
             this.setSay(stringToPut,moodToput);
 
@@ -1730,6 +1804,7 @@ if (symbolAt == "G")
 
                 this.setSay("The supply crate had ammo and food!",this.happy);
                 this.currentEvent = "";
+                this.currentSound = this.SND_SUPPLY;
                 this.canMove = true;
                 
             }
@@ -1750,6 +1825,7 @@ if (symbolAt == "G")
             }
 
             this.setSay("Sectors revealed!",this.happy);
+            this.currentSound = this.SND_RADAR;
 
         }
         else if (this.currentEvent == this.EVENT_RANDOEND)
@@ -1782,14 +1858,26 @@ if (symbolAt == "G")
 
         else if (this.currentEvent == this.EVENT_WIN || this.currentEvent == this.EVENT_DIE)
         {
+
+            //Player lost,
+            if (this.currentEvent == this.EVENT_DIE)
+                {
+                    this.currentSound = this.SND_GAMEOVER;
+                    this.SND_GAMEOVER = "";// Make sure the sound doesn't fire off again.
+                }
+
             //End sequence is complete
             if (this.gearReveal2() == true)
             {
                 this.killMe = true;
+
+                
             }
             if (this.currentEvent == this.EVENT_WIN)
             {
                 this.setSay("YOU WIN!",this.veryhappy);
+                this.currentSound = this.SND_GAMEWIN;
+                    this.SND_GAMEWIN = "";// Make sure the sound doesn't fire off again.
             }
             else
             {
@@ -1833,10 +1921,15 @@ if (symbolAt == "G")
                 this.currentEvent = "";
                 this.canMove = true;
             
+                
                 this.setSay("Hint: Krayans usually appear next to treasure!",this.tutorial)
                 if (this.krayanLocations.length == 0)
                 {
                     this.setSay("There are no Krayans!?",this.neutral);
+                }
+                else
+                {
+                    
                 }
         }
 
@@ -1856,6 +1949,7 @@ if (symbolAt == "G")
             for (var a = 0; a < this.placesNuked.length; a++)
             {
                 var addendum = "";//This is for bigger explosions.
+                this.currentSound = this.SND_NUKEBOOM;
 
                 if (this.placesNuked.length > 1)
                 {
@@ -1931,6 +2025,7 @@ if (symbolAt == "G")
                 }
 
                 this.initGridHide = true;
+                this.currentSound = this.SND_ACIDNEBULA;
             }
 
            
@@ -1970,6 +2065,7 @@ if (symbolAt == "G")
 
             if (this.nearyEnemies.length > 0)
             {
+                this.currentSound = this.SND_NMEREVEAL;
                 this.setSay("Enemies detected!",this.neutral);
                // this.setSay("You can \"carve\" out the sectors around the enemies to help you remember where they are.",this.tutorial);
             }
@@ -1993,6 +2089,7 @@ if (symbolAt == "G")
         }
         else if (this.currentEvent == this.EVENT_RADAR)
         {
+            this.currentSound = this.SND_RADAR;
             if (this.radarResult >= this.radarChance)//Shows non-empty spaces.
             {
                 
@@ -2010,7 +2107,7 @@ if (symbolAt == "G")
                     }
                     else
                     {
-                        this.setSay("No enemies detected!",this.happy);
+                        this.setSay("Nothing nearby",this.happy);
                         
                     }
             }
@@ -2044,6 +2141,7 @@ if (symbolAt == "G")
         {
             this.takeTheThing();
             this.mapShowLocation = this.NearestPoint(this.wantToGo,this.treasureLocations);
+            this.currentSound = this.SND_TREASUREREVEAL;
             var symbolToPut = "m";
             
             if (Math.random() <= this.mapShowChance)
@@ -2151,6 +2249,7 @@ if (symbolAt == "G")
             {
             this.hp = Math.min(this.hp + Math.round(this.hpMax * this.healinghealingfactor),this.hpMax);
             this.setSay("Health restored!",this.happy);
+            this.currentSound = this.SND_HEAL;
             }
             else
             {
@@ -2184,6 +2283,12 @@ if (symbolAt == "G")
             
             if (this.currentEvent != this.EVENT_DIE)
             {
+                switch (this.currentEnemy["IM"])
+                {
+                    case "A": this.currentSound = this.SND_DRONEATTACK; break;
+                    case "B": this.currentSound = this.SND_WHALEATTACK; break;
+                    case "C": this.currentSound = this.SND_KRAYANATTACK; break;
+                }
                 this.currentEvent = this.EVENT_ENEMYPLAYERTURN;
             }
         }
@@ -2209,6 +2314,7 @@ if (symbolAt == "G")
                     this.setSay("An extra layer of bubble protection.",this.happy);
                 }
 
+                this.currentSound = this.SND_BUBBLE;
                 this.bubbles++;
                 this.pain = false;
             }
@@ -2221,6 +2327,7 @@ if (symbolAt == "G")
                 this.inventory["A"] = this.inventory["A"]  + this.ammoGive;
                 this.inventory["B"] = this.inventory["B"] + this.ammoGive;
                 this.inventory["C"] = this.inventory["C"] + this.ammoGive;
+                this.currentSound = this.SND_AMMO;
                 this.setSay("Got " + this.ammoGive + " of each kind of ammo.",this.happy);
         }
         else if (this.currentEvent == this.EVENT_PAIN)
@@ -2243,6 +2350,7 @@ if (symbolAt == "G")
             {
                 this.pain = true;
                 this.setSay("Quick! Find an enemy to pass it off to!",this.angry);
+                this.currentSound = this.SND_PAIN;
             }
 
             this.canMove = true;
@@ -2280,7 +2388,7 @@ if (symbolAt == "G")
                     
                     
                     
-                    
+                    this.currentSound = this.SND_TELEPORTER;
 
                     this.setSay(stringToPut,moodToput);
 
@@ -2293,6 +2401,7 @@ if (symbolAt == "G")
             this.currentEvent = "";
             this.canMove = true;
             this.setSay("Oww...",this.angry);
+            this.currentSound = this.SND_MINE;
             this.attackPlayer(this.mineDMG);
 
             
@@ -2377,6 +2486,13 @@ if (symbolAt == "G")
         
     }
 
+    
+    getSnd ()
+    {
+        var toSend = this.currentSound;
+        this.currentSound = "";
+        return toSend;
+    }
 
     
 }

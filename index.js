@@ -25,10 +25,12 @@ var aboutScreen;
 var tickdown = 0;
 var attackTickdown = 0;//Fired off when the player or the enemy attacks. If this is not 0, nothing else happens.
 var tickdownTreasure = 10;
-var tickdownNukeReveal = 10;//The brief moment when you get to see what was there.
-var tickdownNukeBoom = 10;//How long to keep the explosion up.
+var tickdownNukeReveal = 20;//The brief moment when you get to see what was there.
+var tickdownNukeBoom = 30;//How long to keep the explosion up.
 var tickdownEnemy = 15;//How long to keep the enemy tickdown.
 var tickdownEnemyEncounter = 10;
+var tickdownWhale = 25;
+var tickdownDrone = 15;
 var tickdownEnd = 0;//When this hits 0 switch the screen.
 var tickdownEndBase = 45;
 var tickdownGridReveal = 30;
@@ -45,7 +47,7 @@ var unicornseye;
 var plagerizePiratesPlunder = false;
 var ouchCounter = 0;
 var ouchCounterMax = 30;//Show injured when injured not by an enemy.
-
+var SndBox = new SoundWrangler();
 
 var imgPrefix = "img/";
 var imgIndex = 
@@ -68,6 +70,7 @@ var imgIndex =
     "C":"nme3.png",
     "I am feeling fat and sassy!":"nme3Attack.gif",
     "Life is good!":"nme3Attacked.gif",
+    "I am the queen of France!":"playerbubble.png",
     "S":"supplycrate.png",
     "R":"randoreveal.png",
     "c":"nme3here.gif",
@@ -197,6 +200,12 @@ window.onload = function ()
         
     }
 
+    document.getElementById("volControl").onchange = function()
+    {
+        SndBox.volume = parseInt(document.getElementById("volControl").value)/100;
+        SndBox.PlaySnd(game.SND_GOODIEFIND);
+    }
+
     document.getElementById("basicattack").onclick = function()
     {
         Attack("0");
@@ -261,10 +270,43 @@ window.onload = function ()
         case 1: GMSimple(); break;//Monday
         case 2: GMSimple2(); break;//Tuesday
         case 3: GMFog(); break;//Wednesday
-        case 4: console.log("THURSDAY"); break;
-        case 5: console.log("FRIDAY"); break;
+        case 4: GMNotSoScary(); break;
+        case 5: GMScary(); break;
         default: console.log("SATURDAY");
     }
+
+    //Setup Sounds
+    var sndPrefix = "snd/";
+    SndBox.SetSnd(game.SND_WHALE,sndPrefix + "whale.ogg");
+    SndBox.SetSnd(game.SND_SUPPLY,sndPrefix + "supplyget.ogg");
+    SndBox.SetSnd(game.SND_DRONE,sndPrefix + "DroneIntroduce.ogg");
+    SndBox.SetSnd(game.SND_HEAL,sndPrefix + "healthup.ogg");
+    SndBox.SetSnd(game.SND_TREASURE,sndPrefix + "treasureget.ogg")
+    SndBox.SetSnd(game.SND_BUBBLE,sndPrefix + "bubble.ogg");
+    SndBox.SetSnd(game.SND_NUKELAUNCH,sndPrefix + "launch.ogg");
+    SndBox.SetSnd(game.SND_NUKEBOOM, sndPrefix + "explosion.ogg");
+    SndBox.SetSnd(game.SND_GOODIEFIND, sndPrefix + "chime.ogg");
+    SndBox.SetSnd(game.SND_GAMEOVER, sndPrefix + "gameover.ogg");
+    SndBox.SetSnd(game.SND_GAMEWIN,sndPrefix + "gamewin.ogg");
+    SndBox.SetSnd(game.SND_TELEPORTER,sndPrefix + "teleporter.ogg");
+    SndBox.SetSnd(game.SND_ACIDNEBULA,sndPrefix + "acidnebula.ogg");
+    SndBox.SetSnd(game.SND_PAIN,sndPrefix + "pain.ogg");
+    SndBox.SetSnd(game.SND_DRONEATTACK,sndPrefix + "DroneShoot.ogg");
+    SndBox.SetSnd(game.SND_ATTACK1,sndPrefix + "AttackA.ogg");
+    SndBox.SetSnd(game.SND_BADDIEFIND,sndPrefix + "chimebad.ogg");
+    SndBox.SetSnd(game.SND_NUKE,sndPrefix + "NukeGet.ogg");
+    SndBox.SetSnd(game.SND_MINE,sndPrefix + "mine.ogg");
+    SndBox.SetSnd(game.SND_RADAR,sndPrefix + "radar.ogg");
+    SndBox.SetSnd(game.SND_AMMO,sndPrefix + "ammo.ogg");
+    SndBox.SetSnd(game.SND_NMEREVEAL,sndPrefix + "nmereveal.ogg");
+    SndBox.SetSnd(game.SND_KRAYANATTACK, sndPrefix + "krayanattack.ogg");
+    SndBox.SetSnd(game.SND_KRAYANREVEAL, sndPrefix + "krayanreveal.ogg");
+    SndBox.SetSnd(game.SND_KRAYAN,sndPrefix + "krayanencounter.ogg");
+    SndBox.SetSnd(game.SND_ATTACK2,sndPrefix + "AttackB.ogg");
+    SndBox.SetSnd(game.SND_ATTACK0,sndPrefix + "Attack0.ogg");
+    SndBox.SetSnd(game.SND_ATTACK3,sndPrefix + "AttackC.ogg");
+    SndBox.SetSnd(game.SND_WHALEATTACK,sndPrefix + "whaleAttack.ogg");
+    SndBox.SetSnd(game.SND_TREASUREREVEAL,sndPrefix + "treasureshow.ogg");
     
 }
 
@@ -301,9 +343,19 @@ function GridClick()
         if (game.currentEvent == game.EVENT_ENEMY || game.currentEvent == game.EVENT_DIE)
         {
             tickdown = tickdownEnemyEncounter;
+
+            if (game.currentEvent == game.EVENT_ENEMY)
+            {
+                switch (game.currentEnemy["IM"])
+                {
+                    case "A": tickdown = tickdownDrone; break;
+                    case "B": tickdown = tickdownWhale; break;
+                }
+            }
+
             enemyTile = FindEnemy();
             UpdateTheirHPDisplay();
-            theirHP.style.visibility = "visible";
+            
             ouchCounter = 0;
         }
 
@@ -766,6 +818,6 @@ function engine()
 
     document.getElementById("letroutput").innerHTML = game.saying != "" ? game.saying:"&nbsp;";
     document.getElementById("letroutput").style.color = colorIndex[game.sayingMood];
-
+    SndBox.PlaySnd(game.getSnd());
     
 }

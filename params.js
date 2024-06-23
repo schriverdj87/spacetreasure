@@ -498,10 +498,10 @@ function GMScary()
 "Treasure Finders : 0\n"+
 "Healing Nebulas : 1\n"+
 "Bubbles : 0\n"+
-"Ammo Boxes : 3\n"+
+"Ammo Boxes : 0\n"+
 "Hungry Nebulas : 0\n"+
 "Enemy Teleporters : 0\n"+
-"Radars : 5\n"+
+"Radars : 3\n"+
 "Mines : 0\n"+
 "Mines Around Fighter Drones : 0\n"+
 "Enemy Teleporter Range : 3.001\n"+
@@ -522,6 +522,64 @@ function GMScary()
 "Scanner Chance : 0.1\n"+
 "Radar Chance : 1\n"+
 "Treasure Finder Chance : 0.1\n"+
+"Nuke Chance : 1\n"
+
+
+
+
+ProcessCustomSheet(toPut);
+}
+
+function GMNotSoScary()
+{
+
+    var toPut = "Maximum HP : 10\n"+
+"Electro Cannon Balls : 1\n"+
+"Kamikazi Android : 1\n"+
+"Space Whale Crystals : 1\n"+
+"Fighter Drones : 0\n"+
+"Space Whales : 0\n"+
+"Krayans : 0\n"+
+"Fighter Drone Attack Power : 1\n"+
+"Space Whale Attack Power : 2\n"+
+"Krayan Attack Power : 7\n"+
+"Krayans around Treasures : 8\n"+
+"Space Whales Around Supply Crates : 0\n"+
+"Enemies Hit First : true\n"+
+"Supply Crates : 2\n"+
+"Short Range Scanners : 0\n"+
+"Krayan Locators : 0\n"+
+"Nukes : 0\n"+
+"Acid Nebulas : 5\n"+
+"Long Range Scanners : 0\n"+
+"Enemy Detectors : 13\n"+
+"Treasure Finders : 3\n"+
+"Healing Nebulas : 1\n"+
+"Bubbles : 0\n"+
+"Ammo Boxes : 0\n"+
+"Hungry Nebulas : 6\n"+
+"Enemy Teleporters : 0\n"+
+"Radars : 0\n"+
+"Mines : 20\n"+
+"Mines Around Fighter Drones : 0\n"+
+"Enemy Teleporter Range : 3.001\n"+
+"Mine Damage : 1\n"+
+"Radar Range : 4.001\n"+
+"Scanner Range : 1.5\n"+
+"Scanner High Range : 2.9\n"+
+"Hungry Nebula Damage : 1\n"+
+"Show Supply Boxes : true\n"+
+"Sectors Hidden by Acid Nebulas : 10\n"+
+"Health Restored by Supply Crates : 0.5\n"+
+"Health Restored by Healing Nebulas : 1\n"+
+"Ammo in Ammo Boxes : 1\n"+
+"Enemy Finder Range : 5.001\n"+
+"Enemy Finder N Closest : 5\n"+
+"Krayan Locator Chance : 1\n"+
+"Enemy Finder Chance : 0\n"+
+"Scanner Chance : 0.1\n"+
+"Radar Chance : 1\n"+
+"Treasure Finder Chance : 1.0\n"+
 "Nuke Chance : 1\n"
 
 
