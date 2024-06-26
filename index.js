@@ -155,6 +155,12 @@ window.onload = function ()
 
     }
 
+    document.getElementById("btnMenu").onclick = function()
+    {
+        titleScreen.style.display = "flex";
+        tableArena.style.display = playertray.style.display = "none";
+    }
+
     document.getElementById("btnCustom").onclick = function()
     {
         titleScreen.style.display = "none";

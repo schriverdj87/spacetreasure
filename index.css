@@ -16,6 +16,8 @@ html
 
 }
 
+
+
 #tableArena
 {
     background-color: black;
@@ -210,7 +212,39 @@ html
     color: 	#55FFFF;
 }
 
+#titleScreen
+{
+    background-image: url(img/titlescreen.gif);
+    background-size: contain;
+    background-repeat: no-repeat;
+    display:flex;
+    flex-direction:column;
+    justify-content: flex-end;
+    
+    
+    
+}
 
+#failScreen
+{
+    background-image: url(img/fail.gif);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#titleScreen button
+{
+    font-size:large;
+    min-width: 20%;
+}
+
+
+.fillWindow
+{
+    width: 95vh;
+    min-width: 95vh;
+    height: 95vh;
+}
 
 @media only screen and (max-width: 1000px)
 {
@@ -276,5 +310,12 @@ html
     #playertray
     {
         padding: 0px;
+    }
+
+    .fillWindow
+    {
+        width: 95vw;
+        min-width: 95vw;
+        height: 95vw;
     }
 }
