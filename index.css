@@ -267,12 +267,11 @@ html
     
     .uisquares
     {
-        /*width:30px;*/
-        /*height:30px;*/
+        width:40px;
+        height:40px;
         display:block;
     }
 
-    /*
     .attacknum
     {
         color:white;
@@ -280,7 +279,7 @@ html
         position:relative;
         bottom: 6px;
         left: 7px;
-    }*/
+    }
 }
 
 @media only screen and (max-width: 595px)
