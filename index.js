@@ -53,6 +53,8 @@ var imgPrefix = "img/";
 var imgIndex = 
 {
     "P":"player.png",
+    "Ppain":"playerpain.gif",
+    "Pbubble":"playerbubble.png",
     "The pipe is leaking":"playerAttack.gif",
     "he flew to the bus stop in his lion king slippers":"playerAttacked.gif",
     "O":"nothing.png",
@@ -123,7 +125,7 @@ var colorIndex =
 window.onload = function ()
 {
     
-    titleScreen = document.getElementById("titleScreen");
+    titleScreen = document.getElementById("titleScreenHolder");
     tableArena = document.getElementById("tableArena");
     playertray = document.getElementById("playertray");
     theirHP = document.getElementById("theirHP"); 
@@ -136,13 +138,15 @@ window.onload = function ()
     output = document.getElementById("letroutput");
     customInput = document.getElementById("customInput");
     customOutput = document.getElementById("customOutput");
-    aboutScreen = document.getElementById("aboutScreen");
+    aboutScreen = document.getElementById("aboutScreenHolder");
     
     theirHP.style.visibility = "visible";
+    document.getElementById("customScreenHolder").style.display = "none";
+    aboutScreen.style.display = "none";
 
     document.getElementById("btnStart").onclick = document.getElementById("btnCustomStart").onclick = function()
     {
-        titleScreen.style.display = document.getElementById("customScreen").style.display = "none";
+        titleScreen.style.display = document.getElementById("customScreenHolder").style.display = "none";
         reset();
         tableArena.style.display = playertray.style.display = "block";
        
@@ -164,27 +168,27 @@ window.onload = function ()
     document.getElementById("btnCustom").onclick = function()
     {
         titleScreen.style.display = "none";
-        document.getElementById("customScreen").style.display = "flex";
+        document.getElementById("customScreenHolder").style.display = "flex";
         customOutput.innerHTML = "";
     }
 
     document.getElementById("aboutBack").onclick = function()
     {
         titleScreen.style.display = "flex";
-        document.getElementById("aboutScreen").style.display = "none";
+        aboutScreen.style.display = "none";
     }
 
     document.getElementById("btnAbout").onclick = function()
     {
         titleScreen.style.display = "none";
-        document.getElementById("aboutScreen").style.display = "block";
+        aboutScreen.style.display = "flex";
     }
 
 
     document.getElementById("customBack").onclick = function()
     {
         titleScreen.style.display = "flex";
-        document.getElementById("customScreen").style.display = "none";
+        document.getElementById("customScreenHolder").style.display = "none";
     }
 
     document.getElementById("customDoItButton").onclick = function()
@@ -540,6 +544,10 @@ function fullSyncGrid()
             {
                 imgToPut = imgToPut.replace(".","bubble.");
             }
+            else if (game.gridSeen[y][x] == "P" && game.pain == true)
+            {
+                imgToPut = imgToPut.replace(".","pain.");
+            }
             else if (game.gridSeen[y][x] == "P" && ouchCounter > 0)
             {
                 imgToPut = imgToPut.replace(".png","Attacked.gif");
@@ -794,6 +802,12 @@ function engine()
                     var playerHurt = "url('NAUSIA')".replace("NAUSIA",imgPrefix + "playerbubble.png")
                     document.getElementById(FindPlayer()).style.backgroundImage = playerHurt;
                 }
+
+                //Compensating for "pain" status not showing immediately
+                if (game.pain == true)
+                {
+                    fullSyncGrid();
+                } 
 
             }
             

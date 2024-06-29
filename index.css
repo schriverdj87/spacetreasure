@@ -232,6 +232,14 @@ html
     background-repeat: no-repeat;
 }
 
+#endScreen
+{
+    background-image: url(img/win.gif);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+
 #titleScreen button
 {
     font-size:large;
@@ -244,6 +252,14 @@ html
     width: 95vh;
     min-width: 95vh;
     height: 95vh;
+    
+}
+
+.screencenter
+{
+  
+    width: 100vw; min-width:95vw; margin:auto; display:flex; justify-content: center;
+    
 }
 
 @media only screen and (max-width: 1000px)
@@ -251,11 +267,12 @@ html
     
     .uisquares
     {
-        width:30px;
-        height:30px;
+        /*width:30px;*/
+        /*height:30px;*/
         display:block;
     }
 
+    /*
     .attacknum
     {
         color:white;
@@ -263,7 +280,7 @@ html
         position:relative;
         bottom: 6px;
         left: 7px;
-    }
+    }*/
 }
 
 @media only screen and (max-width: 595px)
