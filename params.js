@@ -84,9 +84,9 @@ var friendlyNames =
     krayanlocators : "Krayan Locators/Reveals the locations of Krayans. Useful if they are exclusively around treasures.",
     nukes : "Nukes/Destroys 1 or 9 sectors wherever the player clicks. If the area includes a treasure or the player it's an instant loss.",
     hides : "Acid Nebulas/\"Unexplores\" a number of random sectors.",
-    longrangescanners : "Long Range Scanners/Reveals sectors around where the player clicks, identically to the telescope in Pirates Plunder.",
+    longrangescanners : "Long Range Scanners/Reveals sectors around where the player clicks. Very similar to the telescope in Pirates Plunder.",
     enemydetectors : "Enemy Detectors/Points out the locations of enemies, usually in an identical manner to the sextant in Pirates Plunder.",
-    treasurefinders : "Treasure Finders/Either points in the direction of the nearest treasure or shows the exact sector like the treasure map in Pirates Plunder.",
+    treasurefinders : "Treasure Finders/Either points in the direction of the nearest treasure or shows the exact sector.",
     healing : "Healing Nebulas/Restores health.",
     bubbles : "Bubbles/Prevents damage once for every time the player collects this.",
     ammo : "Ammo Boxes/Just restores ammo.",
@@ -141,12 +141,13 @@ function GenerateCustomSheet(includeDescription)
 {
     var keys = Object.keys(friendlyNames);
     var toSend = "THE WORKS\n====================\n";
+    
 
     for (var a = 0; a < keys.length; a++)
     {
         var key = keys[a];
         var value = friendlyNames[key].split("/");//0 = Friendly Value. 1 = Description.
-        var toPut = value[0] + ValueSplit + parameters[key];
+        var toPut = value[0] + ValueSplit + new GameParametersDefault()[key];
         if (includeDescription == true)
         {
             toPut = toPut + DescriptionSplit + value[1] ;

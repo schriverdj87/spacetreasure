@@ -20,11 +20,12 @@ var output;
 var customInput;
 var customOutput;
 var aboutScreen; 
+var wpnbtns;
 
 
 var tickdown = 0;
 var attackTickdown = 0;//Fired off when the player or the enemy attacks. If this is not 0, nothing else happens.
-var tickdownTreasure = 10;
+var tickdownTreasure = 15;
 var tickdownNukeReveal = 20;//The brief moment when you get to see what was there.
 var tickdownNukeBoom = 30;//How long to keep the explosion up.
 var tickdownEnemy = 15;//How long to keep the enemy tickdown.
@@ -55,6 +56,7 @@ var imgIndex =
     "P":"player.png",
     "Ppain":"playerpain.gif",
     "Pbubble":"playerbubble.png",
+    "Pdead":"playerdead.png",
     "The pipe is leaking":"playerAttack.gif",
     "he flew to the bus stop in his lion king slippers":"playerAttacked.gif",
     "O":"nothing.png",
@@ -122,6 +124,23 @@ var colorIndex =
     "tutorial":"#55FFFF"
 }
 
+var colorIndexDark = 
+{
+    "happy": "#00AA00",
+    "veryhappy": "#AA5500",
+    "angry":"#AA0000",
+    "neutral":"#AAAAAA",
+    "tutorial":"#00AAAA"
+}
+
+var lastMessage = 0;
+var textFlashTickdown = 0;
+var textFlashTickdownMax = 15;
+
+var wpnBTNTickdown = 0;
+var wpnBTNTickdownMax = 10;
+var wpnBTNTickdownIndex = -1;
+
 window.onload = function ()
 {
     
@@ -129,19 +148,20 @@ window.onload = function ()
     tableArena = document.getElementById("tableArena");
     playertray = document.getElementById("playertray");
     theirHP = document.getElementById("theirHP"); 
-    endScreen = document.getElementById("endScreen"); 
+    endScreen = document.getElementById("endScreenHolder"); 
     betahead = document.getElementById("betahead");
     johnsword = document.getElementById("johnsword");
     quantumwrench = document.getElementById("quantumwrench");
     unicornseye = document.getElementById("unicornseye");
-    failScreen = document.getElementById("failScreen");
+    failScreen = document.getElementById("failScreenHolder");
     output = document.getElementById("letroutput");
     customInput = document.getElementById("customInput");
     customOutput = document.getElementById("customOutput");
     aboutScreen = document.getElementById("aboutScreenHolder");
+    wpnbtns = document.getElementsByClassName("attackbtn");
     
     theirHP.style.visibility = "visible";
-    document.getElementById("customScreenHolder").style.display = "none";
+    document.getElementById("customScreenHolder").style.display = endScreen.style.display = failScreen.style.display = "none";
     aboutScreen.style.display = "none";
 
     document.getElementById("btnStart").onclick = document.getElementById("btnCustomStart").onclick = function()
@@ -203,9 +223,9 @@ window.onload = function ()
     }
 
 
-    document.getElementById("endScreen").onclick = document.getElementById("failScreen").onclick =  function()
+    document.getElementById("endScreenHolder").onclick = document.getElementById("failScreenHolder").onclick =  function()
     {
-        document.getElementById("endScreen").style.display = failScreen.style.display = "none";
+        document.getElementById("endScreenHolder").style.display = failScreen.style.display = "none";
         titleScreen.style.display = "flex";
         
     }
@@ -336,10 +356,9 @@ function GridClick()
         fullSyncGrid();
     
         //Found a thing.
-        
        
 
-        if ([game.EVENT_RADAR,game.EVENT_TELEPORTER,game.EVENT_TREASURE,game.EVENT_NUKE,game.EVENT_GRIDHIDE,game.EVENT_SEXTANT,game.EVENT_MAP,game.EVENT_GLUE,game.EVENT_SUPPLY,game.EVENT_BUBBLE,game.EVENT_AMMO,game.EVENT_PAIN].includes(game.currentEvent))
+        if ([game.EVENT_KFINDPRE,game.EVENT_RADAR,game.EVENT_TELEPORTER,game.EVENT_TREASURE,game.EVENT_NUKE,game.EVENT_GRIDHIDE,game.EVENT_SEXTANT,game.EVENT_MAP,game.EVENT_GLUE,game.EVENT_SUPPLY,game.EVENT_BUBBLE,game.EVENT_AMMO,game.EVENT_PAIN].includes(game.currentEvent))
         {
             tickdown = tickdownTreasure;
         }
@@ -367,6 +386,7 @@ function GridClick()
             UpdateTheirHPDisplay();
             
             ouchCounter = 0;
+            wpnBTNTickdown = 1;
         }
 
         if (game.currentEvent == game.EVENT_RANDO)
@@ -540,7 +560,12 @@ function fullSyncGrid()
         {
             var tdGridToChange = document.getElementById(x + "," + y);
             var imgToPut = imgPrefix + imgIndex[game.gridSeen[y][x]];
-            if (game.gridSeen[y][x] == "P" && game.bubbles > 0)
+
+            if (game.gridSeen[y][x] == "P" && game.hp <= 0)
+            {
+                imgToPut = imgToPut.replace(".","dead.");
+            }
+            else if (game.gridSeen[y][x] == "P" && game.bubbles > 0)
             {
                 imgToPut = imgToPut.replace(".","bubble.");
             }
@@ -568,7 +593,7 @@ function EnemyAttacks()
     }
     if (game.currentEvent == game.EVENT_ENEMY || game.currentEvent == game.EVENT_ENEMYENEMYTURN)
     {
-        
+        //Wherever this this method is called this line is put immediately after.
         document.getElementById(enemyTile).style.backgroundImage = ("url(\"" + imgPrefix + imgIndex[game.currentEnemy[game.nmeKeyIMA]] + "\")").replace(".png","Attack.gif");
     }
 
@@ -667,6 +692,7 @@ function engine()
                     {
                         game.crank();
                         EnemyAttacks();
+                        document.getElementById(enemyTile).style.backgroundImage = ("url(\"" + imgPrefix + imgIndex[game.currentEnemy[game.nmeKeyIMA]] + "\")").replace(".png","Attack.gif");
                         UpdateMyHPDisplay();
                         tickdown = tickdownEnemy;
                         
@@ -695,35 +721,17 @@ function engine()
         if (tickdownEnd == 0 && game.currentEvent == game.EVENT_WIN)
         {
         tableArena.style.display = playertray.style.display = "none";
-        endScreen.style.display = "block";
+        endScreen.style.display = "flex";
         }
         else if (tickdownEnd == 0 && game.currentEvent == game.EVENT_DIE)
         {
             tableArena.style.display = playertray.style.display = "none";
-            failScreen.style.display = "block";
+            failScreen.style.display = "flex";
             
         }
     }
     
-    /*
-    else if (tickdown > 0 && game.currentEvent == game.EVENT_ENEMY && enemyTile != "")//For when the enemy is done attacking or taking damage
-    {
-        tickdown --
-        
-        if (tickdown == 0)
-        {
-            EndAttack();
-            
-            UpdateTheirHPDisplay();
-
-            if (enemyTurn == true)
-            {
-                EnemyAttacks();
-                enemyTurn = false;
-                UpdateMyHPDisplay();
-            }
-        }
-    }*/
+    
     else if (tickdown > 0)
     {
         
@@ -769,7 +777,7 @@ function engine()
                 {
                     tickdown = 1;
                 }
-                else if (game.currentEvent == game.EVENT_SEXTANT1 || game.currentEvent == game.EVENT_MAP1 || (game.currentEvent == game.EVENT_RADAR && (game.radarResult >= game.radarChance)))//Showing something in the map
+                else if (game.currentEvent == game.EVENT_KFIND || game.currentEvent == game.EVENT_SEXTANT1 || game.currentEvent == game.EVENT_MAP1 || (game.currentEvent == game.EVENT_RADAR && (game.radarResult >= game.radarChance)))//Showing something in the map
                 {
                     tickdown = tickdownSextant;
                 }
@@ -781,6 +789,7 @@ function engine()
                 {
                     
                     EnemyAttacks();
+                    document.getElementById(enemyTile).style.backgroundImage = ("url(\"" + imgPrefix + imgIndex[game.currentEnemy[game.nmeKeyIMA]] + "\")").replace(".png","Attack.gif");
                     game.crank();
                     UpdateMyHPDisplay();
                     tickdown = tickdownEnemy;
@@ -836,8 +845,62 @@ function engine()
         }
     }
 
+    //Flashing the buttons
+    if (wpnBTNTickdown > 0)
+    {
+        wpnBTNTickdown--;
+
+        if (wpnBTNTickdown == 0)
+        {
+            wpnBTNTickdownIndex++
+            if (wpnBTNTickdownIndex <= wpnbtns.length)
+            {
+                wpnBTNTickdown = wpnBTNTickdownMax;
+
+                //Decolorize the last one.
+                if (wpnBTNTickdownIndex > 0)
+                {
+                    wpnbtns[wpnBTNTickdownIndex - 1].style.backgroundColor = "#AAAAAA";
+                }
+
+                //Colorize the next one.
+                if (wpnBTNTickdownIndex < wpnbtns.length)
+                {
+                    wpnbtns[wpnBTNTickdownIndex].style.backgroundColor = "#FF5555";
+                }
+
+                if (wpnBTNTickdownIndex == wpnbtns.length)
+                {
+                    wpnBTNTickdownIndex = -1
+                    wpnBTNTickdown = 0;
+                }
+
+                
+            }
+        }
+        
+
+           
+
+        
+    }
+
+    //Wrangle putting and making the text flash.
+    
+    if (game.saying != lastMessage)
+    {
+        textFlashTickdown = textFlashTickdownMax;
+    }
+
     document.getElementById("letroutput").innerHTML = game.saying != "" ? game.saying:"&nbsp;";
-    document.getElementById("letroutput").style.color = colorIndex[game.sayingMood];
+    document.getElementById("letroutput").style.color = (textFlashTickdown % 5 != 0 || textFlashTickdown == 0) ? colorIndex[game.sayingMood]:colorIndexDark[game.sayingMood];
+
+    if (textFlashTickdown > 0)
+    {
+        textFlashTickdown--;
+    }
+    lastMessage = game.saying;
+
     SndBox.PlaySnd(game.getSnd());
     
 }

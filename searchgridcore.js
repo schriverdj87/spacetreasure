@@ -109,6 +109,7 @@ class SearchGridCore
         this.EVENT_SUPPLY = "GOT SUPPLIES!";
         this.EVENT_RANDO = "RANDO REVEAL!";
         this.EVENT_RANDOEND = "rando ending...";
+        this.EVENT_KFINDPRE = "PRE KRAYAN FINDER"
         this.EVENT_KFIND = "KRAYAN FINDER!";
         this.EVENT_SENSOR = "SENSOR!";
         this.EVENT_TELESCOPE = "PICK SOME TILES!";
@@ -210,7 +211,7 @@ class SearchGridCore
         this.neutral = "neutral";
         this.tutorial = "tutorial";
         this.sayingMood = this.neutral;
-        this.tutorialSay = ["Find the 4 treasures to win the game!","Hint: You may warp to any unexplored sector adjacent to one you've already explored."]
+        this.tutorialSay = ["Find the 4 treasures to win the game!</br>","You can warp to any unexplored sector next to one you've already explored."]
         
         
         //Builds the arena
@@ -353,7 +354,12 @@ class SearchGridCore
         this.setSay("Click/tap any sector next to the space sheep to move.",this.tutorial);
         
 
-        console.log(this.PrintGrid());
+        if (["1","2","3","4"].includes(this.grid[this.playerStart.y][this.playerStart.x]) == false)
+        {
+            this.grid[this.playerStart.y][this.playerStart.x] = "0";
+        }
+
+        //console.log(this.PrintGrid());
 
       
 
@@ -638,7 +644,7 @@ class SearchGridCore
             else if (withthis != "0")
             {
                 this.currentEnemy[this.nmeKeyHP] = Math.max(0,this.currentEnemy[this.nmeKeyHP] - 3);
-                this.setSay("Hint: You have a specific weapon for each enemy that will take them down in one hit.",this.tutorial);
+                this.setSay("Hint: Each weapon corresponds to a specific enemy that it can one-shot.",this.tutorial);
                 
             }
             else //Weapon is basic weapon.
@@ -730,9 +736,9 @@ class SearchGridCore
         else if (this.currentEvent == this.EVENT_NUKE1)//Reveal and store the location.
         {
             
-            if (this.gridSeen[y][x] != "#")
+            if (this.gridSeen[y][x] != "#" && this.gridSeen[y][x] != "P")
             {
-                this.setSay("It won't target unexplored space!",this.angry);
+                this.setSay("It won't target explored space!",this.angry);
                 return false;
             }
 
@@ -914,7 +920,7 @@ if (symbolAt == "T")
             this.randoReveal3(0,0);
 
             this.currentSound = this.SND_GOODIEFIND;
-            this.setSay("It's a telescope! Click a sector to see what's there!",this.happy);
+            this.setSay("It's a long-range scanner! Click a sector to see what's there!",this.happy);
             
         }
 
@@ -926,11 +932,11 @@ if (symbolAt == "K")
     this.gridSeen[y][x] = symbolAt;
     moveTo = nearby;
     this.krayanLocations = this.GetAllTheseFromGrid("C");
-    this.currentEvent = this.EVENT_KFIND;
+    this.currentEvent = this.EVENT_KFINDPRE;
     this.setSay("It's a krayan detector!",this.happy);
+    this.currentSound = this.SND_GOODIEFIND;
 
-    this.currentSound = this.SND_KRAYANREVEAL;
-    Math.random() <= this.krayanLocatorChance ? this.kDetect1():this.kDetect2();
+    
 }
 
 //Found NUKE
@@ -1089,7 +1095,7 @@ if (symbolAt == "G")
                 
             }
 
-            this.setSay("Space Radar!",this.neutral);
+            this.setSay("Space radar!",this.neutral);
         }
 
         
@@ -1906,6 +1912,13 @@ if (symbolAt == "G")
             }
             
         }
+        else if (this.currentEvent == this.EVENT_KFINDPRE)
+        {
+            this.currentSound = this.SND_KRAYANREVEAL;
+            Math.random() <= this.krayanLocatorChance ? this.kDetect1():this.kDetect2();
+            this.currentEvent = this.EVENT_KFIND;
+            this.setSay("Hint: Krayans usually appear next to treasure!",this.tutorial)
+        }
         else if (this.currentEvent == this.EVENT_KFIND)
         {
             this.currentEvent = "";
@@ -1922,7 +1935,7 @@ if (symbolAt == "G")
                 this.canMove = true;
             
                 
-                this.setSay("Hint: Krayans usually appear next to treasure!",this.tutorial)
+                
                 if (this.krayanLocations.length == 0)
                 {
                     this.setSay("There are no Krayans!?",this.neutral);
@@ -2026,6 +2039,7 @@ if (symbolAt == "G")
 
                 this.initGridHide = true;
                 this.currentSound = this.SND_ACIDNEBULA;
+                this.setSay("It ate away at the space sheep's map!",this.angry);
             }
 
            
@@ -2152,71 +2166,9 @@ if (symbolAt == "G")
             else
             {
                 this.setupTreasureApprox(this.mapShowLocation.x,this.mapShowLocation.y);
-                /*
-                //Indicator points in the direction of the treasure
-                var playerLocus = this.LocatePlayer();
-                var angle = this.PointAngle(playerLocus,this.mapShowLocation);
-
-                //N
-                if (angle >= 248 && angle <= 300.1)
-                {
-                    playerLocus.y = playerLocus.y - 1;
-                    symbolToPut = symbolToPut + "n";
-                }
-                //NE
-                else if (angle >= 300.1 && angle <= 329)
-                {
-                    playerLocus.y = playerLocus.y - 1;
-                    playerLocus.x = playerLocus.x + 1;
-                    symbolToPut = symbolToPut + "ne";
-                }
-                //E
-                else if ((angle >= 329 && angle <= 360) || (angle >= 0 && angle <=31))
-                {
-                    playerLocus.x = playerLocus.x + 1;
-                    symbolToPut = symbolToPut + "e";
-                }
-                //SE
-                else if (angle >= 31 && angle <= 68.2)
-                {
-                    playerLocus.y = playerLocus.y + 1;
-                    playerLocus.x = playerLocus.x + 1;
-                    symbolToPut = symbolToPut + "se";
-                }
-                //S
-                else if (angle >= 68.2 && angle <= 112)
-                {
-                    playerLocus.y = playerLocus.y + 1;
-                    symbolToPut = symbolToPut + "s";
-                }
-                //SW
-                else if (angle >= 112 && angle <= 158)
-                {
-                    playerLocus.y = playerLocus.y + 1;
-                    playerLocus.x = playerLocus.x - 1;
-                    symbolToPut = symbolToPut + "sw";
-                }
-                //W
-                else if (angle >= 158 && angle <= 202)
-                {
-                        
-                        playerLocus.x = playerLocus.x - 1;
-                        symbolToPut = symbolToPut + "w";
-                }
-                //NW
-                else if (angle >= 202 && angle <= 248)
-                {
-                    playerLocus.y = playerLocus.y - 1;
-                    playerLocus.x = playerLocus.x - 1;
-                    symbolToPut = symbolToPut + "nw";
-                }
-
-                this.mapShowLocation = playerLocus;*/
-                
                 
             }
-            //this.mapShowLocation["z"] = this.gridSeen[this.mapShowLocation.y][this.mapShowLocation.x];
-            //this.gridSeen[this.mapShowLocation.y][this.mapShowLocation.x] = symbolToPut;
+         
 
             this.currentEvent = this.EVENT_MAP1;
 
@@ -2281,14 +2233,16 @@ if (symbolAt == "G")
         {
             this.attackPlayer(this.currentEnemy[this.nmeKeyAttack]);
             
-            if (this.currentEvent != this.EVENT_DIE)
-            {
-                switch (this.currentEnemy["IM"])
+            switch (this.currentEnemy["IM"])
                 {
                     case "A": this.currentSound = this.SND_DRONEATTACK; break;
                     case "B": this.currentSound = this.SND_WHALEATTACK; break;
                     case "C": this.currentSound = this.SND_KRAYANATTACK; break;
                 }
+
+            if (this.currentEvent != this.EVENT_DIE)
+            {
+                
                 this.currentEvent = this.EVENT_ENEMYPLAYERTURN;
             }
         }
@@ -2400,7 +2354,14 @@ if (symbolAt == "G")
             this.takeTheThing();
             this.currentEvent = "";
             this.canMove = true;
-            this.setSay("Oww...",this.angry);
+            if (this.bubbles <= 0)
+            {
+                this.setSay("Oww...",this.angry);
+            }
+            else
+            {
+                this.setSay("The bubble protected you!",this.neutral);
+            }
             this.currentSound = this.SND_MINE;
             this.attackPlayer(this.mineDMG);
 
@@ -2428,6 +2389,7 @@ if (symbolAt == "G")
     //Reveals grid in a random pattern.
     gearReveal2()
     {
+        this.unexploredSpaces = this.GetAllTheseFromSeenGrid("#");
         if (this.unexploredSpaces.length == 0)
         {
             return true;
@@ -2480,7 +2442,7 @@ if (symbolAt == "G")
   
     setSay(tothis,mood)
     {
-       
+            
             this.saying = tothis;
             this.sayingMood = mood;
         

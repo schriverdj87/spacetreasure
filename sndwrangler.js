@@ -16,6 +16,11 @@ class SoundWrangler
         if (key != "")
         {
             this.Snds[key].volume = this.volume;
+            
+            if (key != "RADAR")//Delays for some reason with this specific sound.
+            {
+                this.Snds[key].currentTime = 0;
+            }
             this.Snds[key].play();
         }
     }
