@@ -220,12 +220,15 @@ function ProcessCustomSheet(grindme)
         //Parse float values
         if ((parameters[unfriendlyName] + "").indexOf(".") != -1)
         {
-            try
-            {
+           
                 
-                parameters[unfriendlyName] = Math.abs(parseFloat(friendlyValue));
+            var floatPut = Math.abs(parseFloat(friendlyValue));
+            
+            if (floatPut + "" != "NaN")
+            {
+                parameters[unfriendlyName] = floatPut;
             }
-            catch (err)
+            else
             {
                 toSend = toSend + errTemplate.replace("ERRHERE", "\"" + raw1 + "\" " + " Is not a numerical value.");
             }
@@ -233,11 +236,14 @@ function ProcessCustomSheet(grindme)
         }
         else
         {//Parse Int Values
-            try
+            var intput = Math.round(Math.abs(parseInt(friendlyValue)));
+            
+            if (intput + "" != "NaN")
             {
-                parameters[unfriendlyName] = Math.round(Math.abs(parseInt(friendlyValue)));  
+                parameters[unfriendlyName] = intput;  
             }
-            catch (err)
+
+            else
             {
                 toSend = toSend + errTemplate.replace("ERRHERE", "\"" + raw1 + "\" " + " Is not a numerical value.");
             }
@@ -320,13 +326,13 @@ var toPut = "Maximum HP : 10\n"+
 "Space Whales Around Supply Crates : 0\n"+
 "Enemies Hit First : true\n"+
 "Supply Crates : 3\n"+
-"Short Range Scanners : 10\n"+
+"Short Range Scanners : 16\n"+
 "Krayan Locators : 0\n"+
 "Nukes : 0\n"+
 "Acid Nebulas : 5\n"+
 "Long Range Scanners : 0\n"+
 "Enemy Detectors : 0\n"+
-"Treasure Finders : 3\n"+
+"Treasure Finders : 5\n"+
 "Healing Nebulas : 3\n"+
 "Bubbles : 0\n"+
 "Ammo Boxes : 0\n"+
